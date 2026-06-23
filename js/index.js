@@ -50,9 +50,3 @@ const borrarPlatillo = (id) => {
   platillo.remove();
 };
 
-function agregarALista(platillo, id) {
-  const contenidolista = `
-    <option value="${id}">${platillo.nombre} $${platillo.precio} MXN</option>
-  `;
-  document.getElementById("lista-platillos").innerHTML += contenidolista;
-}
