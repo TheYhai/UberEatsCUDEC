@@ -4,8 +4,54 @@ document.addEventListener('DOMContentLoaded', function() {
   // nav menu
   const menus = document.querySelectorAll('.side-menu');
   M.Sidenav.init(menus, {edge: 'right'});
+
+  // Botones
+  const btnGuardar = document.getElementById("btnGuardar");
+  const btnCancelar = document.getElementById("btnCancelar");
+
+  // Guardar pedido
+  btnGuardar.addEventListener("click", function() {
+    const platillo = document.getElementById("listaplatillos").options[
+      document.getElementById("listaplatillos").selectedIndex
+    ].text; // obtiene el nombre del platillo
+    const nombre = document.getElementById("txtNombre").value;
+    const direccion = document.getElementById("txtDireccion").value;
+
+    if (platillo === "" || nombre === "" || direccion === "") {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
+
+    // Guardar en Firebase (colección pedidos)
+    db.collection("pedidos").add({
+      direccion: direccion,
+      nombre: nombre,
+      platillo: platillo
+    })
+    .then((docRef) => {
+      alert("Pedido registrado con ID: " + docRef.id);
+      // limpiar formulario
+      document.getElementById("listaplatillos").value = "";
+      document.getElementById("txtNombre").value = "";
+      document.getElementById("txtDireccion").value = "";
+    })
+    .catch((error) => {
+      console.error("Error al guardar el pedido:", error);
+    });
+  });
+
+  // Cancelar
+  btnCancelar.addEventListener("click", function() {
+    document.getElementById("listaplatillos").value = "";
+    document.getElementById("txtNombre").value = "";
+    document.getElementById("txtDireccion").value = "";
+  });
 });
 
+
+// --------------------
+// LISTA DE PLATILLOS
+// --------------------
 db.collection("platillos").onSnapshot((coleccion) => {
     coleccion.docChanges().forEach((registro) => {
         if (registro.type === "added") {
@@ -20,8 +66,9 @@ function agregarALista(platillo, id) {
 }
 
 
-//
-
+// --------------------
+// UBICACIÓN
+// --------------------
 document.getElementById("btnUbicacion").addEventListener("click", function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(exito, error);
@@ -31,23 +78,24 @@ document.getElementById("btnUbicacion").addEventListener("click", function() {
 });
 
 function exito(posicion) {
-    alert("Latitud: " + posicion.coords.latitude + 
-          " Longitud: " + posicion.coords.longitude);
-    let latitud = posicion.coords.latitude
-    let longitud = posicion.coords.longitude
-    fetch(`https://nominatin.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`,{ 
+    let latitud = posicion.coords.latitude;
+    let longitud = posicion.coords.longitude;
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, { 
         headers: {
             'User-Agent': 'Yhaieats (lizcolin39@gmail.com)'
         }   
     })
-    .then (respuesta => respuesta.json())
-    .then(data => alert(data.display_name))
+    .then(respuesta => respuesta.json())
+    .then(data => {
+        // Mostrar la dirección directamente en el textbox
+        document.getElementById("txtDireccion").value = data.display_name;
+    })
     .catch(error => console.error(error));
-
 }
 
 function error(posicion){
-    alert("Error al obtener la ubicacion");
+    alert("Error al obtener la ubicación");
     console.log(error);
 }
 
