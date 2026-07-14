@@ -50,3 +50,23 @@ const borrarPlatillo = (id) => {
   platillo.remove();
 };
 
+let streaming = false;
+//Este es el tamaño de la foto que se va a tomar
+let width = 320;
+let height = 0;
+const video = document.getElementById('Video');
+const canvas = document.getElementById('Canvas');
+const foto = document.getElementById('foto');
+const btnFoto = document.getElementById('btnFoto');
+
+btnFoto.addEventListener("click", function() {
+  navigator.mediaDevices
+  .getUserMedia({ video: true, audio: false })
+  .then((stream) => {
+    video.srcObject = stream;
+    video.play();
+  })
+  .catch((err) => {
+    console.error(`Error al acceder a la cámara: ${err}`);
+  });
+})

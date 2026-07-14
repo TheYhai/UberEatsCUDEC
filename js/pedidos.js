@@ -89,7 +89,17 @@ function exito(posicion) {
     .then(respuesta => respuesta.json())
     .then(data => {
         // Mostrar la dirección directamente en el textbox
-        document.getElementById("txtDireccion").value = data.display_name;
+        //document.getElementById("txtDireccion").value = data.display_name;
+        let ciudad = data.address.city;
+        let pais = data.address.country;
+        document.getElementById("txtDireccion").innerHTML = `${ciudad}, ${pais}`;
+
+    var map = L.map('map').setView([latitud, longitud], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    var marker = L.marker([latitud, longitud]).addTo(map);
     })
     .catch(error => console.error(error));
 }
