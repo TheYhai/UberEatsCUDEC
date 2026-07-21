@@ -57,14 +57,26 @@
         <input placeholder="e.g. Tofu, mushroom, garlic" id="ingredients" type="text" class="validate">
         <label for="ingredients">Ingredientes</label>
       </div>
+      <input id="fotoInput" type="hidden" value="">
       <div class="input-field">
         <input placeholder="ejemplo: 100" id="price" type="number" class="validate">
         <label for="price">Precio</label>
+      </div>
       <div class="input-field center">
         <button class="btn-small">Agregar</button>
       </div>
     </form>
-    <button id = "btnFoto">Imagen</button>
+   
+    <div class="center">
+  <!-- Antes tenías un botón -->
+  <!-- <button id="btnFoto">Imagen</button> -->
+
+  <!-- Ahora debe ser un input tipo file -->
+      <input type="file" id="btnFoto" accept="image/*">
+
+      <button id="btnCapturar" class="btn-small">Capturar</button>
+      <button id="btnLimpiar" class="btn-small red">Limpiar</button>
+    </div>
     <div id="Camera">
         <video id="Video">No hay video disponible</video>
       </div>
@@ -73,6 +85,7 @@
         <img id="foto" src="" alt="Foto del platillo">
       </div>
   </div>
+  
   
   
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>

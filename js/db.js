@@ -14,25 +14,29 @@ let contenidoLista = "";
      });
  });
 
-const formularioAgregar = document.querySelector("form");
-formularioAgregar.addEventListener("submit", (e) => {
-    e.preventDefault();
-const platilloNuevo = {
-    nombre: formularioAgregar.title.value,
-    ingredientes: formularioAgregar.ingredients.value,
-    precio: formularioAgregar.price.value
-}
-db.collection("platillos").add(platilloNuevo)
-.catch((error) => {
-    console.error(error);
-    alert("Error al agregar el platillo");
-});
-    formularioAgregar.title.value = "";
-    formularioAgregar.ingredients.value = "";
-    formularioAgregar.price.value = "";
-    alert("Platillo agregado correctamente");
-});
+const formularioAgregar = document.querySelector(".add-recipe");
 
+formularioAgregar.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const platilloNuevo = {
+    nombre: document.getElementById("title").value,
+    ingredientes: document.getElementById("ingredients").value,
+    precio: document.getElementById("price").value,
+    foto: document.getElementById("fotoInput").value // 🔑 aquí se guarda la imagen
+  };
+
+  db.collection("platillos").add(platilloNuevo)
+    .then(() => {
+      alert("Platillo agregado correctamente");
+      formularioAgregar.reset();
+      document.getElementById("foto").setAttribute("src", ""); // limpia preview
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Error al agregar el platillo");
+    });
+});
 
 const platilloBorrar = document.querySelector(".recipes");
 platilloBorrar.addEventListener("click", (e) => {

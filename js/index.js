@@ -12,13 +12,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function mostrarPlatillo(platillo, id) {
+  let fotoPlatillo = "";
+  if (platillo.foto) {
+  fotoPlatillo = platillo.foto; // ya es un DataURL válido
+} else {
+  fotoPlatillo = "img/default.png";
+}
+
   contenido = `
   <div class='card-panel recipe white row' id='${id}' data-id='${id}'>
+  <img src="${fotoPlatillo}" height="100px" width="100px">
     <div class='recipe-details'>
         <div class='recipe-title'>
           ${platillo.nombre}
           </div>
-          <div class='recipe-ingredients'>
+          <div class='recipe-ingredients'>w
           ${platillo.ingredientes}
           </div>
           <div class='recipe-price'>
@@ -59,14 +67,68 @@ const canvas = document.getElementById('Canvas');
 const foto = document.getElementById('foto');
 const btnFoto = document.getElementById('btnFoto');
 
-btnFoto.addEventListener("click", function() {
-  navigator.mediaDevices
-  .getUserMedia({ video: true, audio: false })
-  .then((stream) => {
-    video.srcObject = stream;
-    video.play();
-  })
-  .catch((err) => {
-    console.error(`Error al acceder a la cámara: ${err}`);
-  });
+btnFoto.addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const fotoFinal = e.target.result; // base64 de la imagen
+      foto.setAttribute("src", fotoFinal); // mostrar en <img>
+      document.getElementById("fotoInput").value = fotoFinal; // guardar en input oculto
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+video.addEventListener("canplay", () => {
+  if (!streaming) {
+    height = video.videoHeight / (video.videoWidth / width);
+    video.setAttribute("width", width);
+    video.setAttribute("height", height);
+    canvas.setAttribute("width", width);
+    canvas.setAttribute("height", height);
+    streaming = true;
+  }
 })
+
+function tomarFoto() {
+  const context = canvas.getContext("2d");
+  if (width && height) {
+    canvas.width = width;
+    canvas.height = height;
+    context.drawImage(video, 0, 0, width, height);
+    const fotoFinal = canvas.toDataURL("image/png");
+    foto.setAttribute("src", fotoFinal); // muestra la foto en <img>
+    document.getElementById("fotoInput").value = fotoFinal; // guarda en el input oculto
+  } else {
+    limpiarfoto();
+  }
+}
+
+function limpiarfoto() {
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#AAA";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  foto.setAttribute("src", canvas.toDataURL("image/png"));
+}
+
+
+
+const btnCapturar = document.getElementById('btnCapturar');
+const btnLimpiar = document.getElementById('btnLimpiar');
+
+
+btnCapturar.addEventListener("click", (e) => {
+  e.preventDefault();
+  tomarFoto(); 
+});
+
+// Limpiar foto
+btnLimpiar.addEventListener("click", (e) => {
+  e.preventDefault();
+  limpiarfoto(); 
+});
+
+//Agregarla al form  para la base de datops 
+
+//Buscar el click del boton se manda a guardar el platillo
