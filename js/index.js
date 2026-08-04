@@ -98,20 +98,18 @@ function tomarFoto() {
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
     const fotoFinal = canvas.toDataURL("image/png");
-    foto.setAttribute("src", fotoFinal); // muestra la foto en <img>
-    document.getElementById("fotoInput").value = fotoFinal; // guarda en el input oculto
+    // Solo mostramos en <img>, no en canvas
+    foto.setAttribute("src", fotoFinal);
+    document.getElementById("fotoInput").value = fotoFinal;
   } else {
     limpiarfoto();
   }
 }
 
 function limpiarfoto() {
-  const context = canvas.getContext("2d");
-  context.fillStyle = "#AAA";
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  foto.setAttribute("src", canvas.toDataURL("image/png"));
+  foto.setAttribute("src", ""); // limpia la vista previa
+  document.getElementById("fotoInput").value = "";
 }
-
 
 
 const btnCapturar = document.getElementById('btnCapturar');
@@ -141,7 +139,7 @@ btnCamara.addEventListener("click", (e) => {
   navigator.mediaDevices
     .getUserMedia({
       video: {
-        facingMode: { ideal: "environment" } // cámara trasera
+        facingMode: { exact: "environment" } // fuerza cámara trasera
       },
       audio: false
     })
@@ -151,6 +149,6 @@ btnCamara.addEventListener("click", (e) => {
     })
     .catch((error) => {
       console.error("Error al acceder a la cámara:", error);
-      alert("No se pudo acceder a la cámara. Verifica permisos y HTTPS.");
+      alert("No se pudo acceder a la cámara trasera. Verifica permisos y HTTPS.");
     });
 });
