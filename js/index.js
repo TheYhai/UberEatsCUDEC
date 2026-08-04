@@ -132,3 +132,22 @@ btnLimpiar.addEventListener("click", (e) => {
 //Agregarla al form  para la base de datops 
 
 //Buscar el click del boton se manda a guardar el platillo
+
+const btnCamara = document.getElementById("btnCamara");
+
+btnCamara.addEventListener("click", function () {
+  navigator.mediaDevices
+    .getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" } // usa cámara trasera si está disponible
+      },
+      audio: false
+    })
+    .then((stream) => {
+      video.srcObject = stream;
+      video.play();
+    })
+    .catch((error) => {
+      console.error("Error al acceder a la cámara:", error);
+    });
+});
