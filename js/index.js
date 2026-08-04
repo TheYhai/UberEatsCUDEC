@@ -133,13 +133,15 @@ btnLimpiar.addEventListener("click", (e) => {
 
 //Buscar el click del boton se manda a guardar el platillo
 
+// Botón para iniciar cámara
 const btnCamara = document.getElementById("btnCamara");
 
-btnCamara.addEventListener("click", function () {
+btnCamara.addEventListener("click", (e) => {
+  e.preventDefault();
   navigator.mediaDevices
     .getUserMedia({
       video: {
-        facingMode: { ideal: "environment" } // usa cámara trasera si está disponible
+        facingMode: { ideal: "environment" } // cámara trasera
       },
       audio: false
     })
@@ -149,5 +151,6 @@ btnCamara.addEventListener("click", function () {
     })
     .catch((error) => {
       console.error("Error al acceder a la cámara:", error);
+      alert("No se pudo acceder a la cámara. Verifica permisos y HTTPS.");
     });
 });
