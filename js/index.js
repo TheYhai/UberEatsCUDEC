@@ -134,21 +134,17 @@ btnLimpiar.addEventListener("click", (e) => {
 // Botón para iniciar cámara
 const btnCamara = document.getElementById("btnCamara");
 
-btnCamara.addEventListener("click", (e) => {
+btnCamara.addEventListener("click", async (e) => {
   e.preventDefault();
-  navigator.mediaDevices
-    .getUserMedia({
-      video: {
-        facingMode: { exact: "environment" } // fuerza cámara trasera
-      },
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" }, // cámara trasera
       audio: false
-    })
-    .then((stream) => {
-      video.srcObject = stream;
-      video.play();
-    })
-    .catch((error) => {
-      console.error("Error al acceder a la cámara:", error);
-      alert("No se pudo acceder a la cámara trasera. Verifica permisos y HTTPS.");
     });
+    video.srcObject = stream;
+    video.play();
+  } catch (error) {
+    console.error("Error al acceder a la cámara trasera:", error);
+    alert("No se pudo abrir la cámara trasera. Verifica permisos y HTTPS.");
+  }
 });
