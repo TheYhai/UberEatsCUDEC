@@ -98,13 +98,16 @@ function tomarFoto() {
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
     const fotoFinal = canvas.toDataURL("image/png");
-    // Solo mostramos en <img>, no en canvas
     foto.setAttribute("src", fotoFinal);
     document.getElementById("fotoInput").value = fotoFinal;
+
+    // 🔹 Ocultar el cuadro de la cámara
+    document.getElementById("Camera").style.display = "none";
   } else {
     limpiarfoto();
   }
 }
+
 
 function limpiarfoto() {
   foto.setAttribute("src", ""); // limpia la vista previa
