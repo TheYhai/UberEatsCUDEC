@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
   btnGuardar.addEventListener("click", function() {
     const platillo = document.getElementById("listaplatillos").options[
       document.getElementById("listaplatillos").selectedIndex
-    ].text; // obtiene el nombre del platillo
+    ].text;
     const nombre = document.getElementById("txtNombre").value;
     const direccion = document.getElementById("txtDireccion").value;
 
@@ -30,6 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then((docRef) => {
       alert("Pedido registrado con ID: " + docRef.id);
+
+      // Limpiar contenedor QR antes de generar uno nuevo
+      document.getElementById("qr").innerHTML = "";
+
+      // Generar QR con el nombre del platillo
+      new QRCode(document.getElementById("qr"), {
+        text: platillo,
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+
       // limpiar formulario
       document.getElementById("listaplatillos").value = "";
       document.getElementById("txtNombre").value = "";
@@ -88,18 +102,16 @@ function exito(posicion) {
     })
     .then(respuesta => respuesta.json())
     .then(data => {
-        // Mostrar la dirección directamente en el textbox
-        //document.getElementById("txtDireccion").value = data.display_name;
         let ciudad = data.address.city;
         let pais = data.address.country;
         document.getElementById("txtDireccion").innerHTML = `${ciudad}, ${pais}`;
 
-    var map = L.map('map').setView([latitud, longitud], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-    var marker = L.marker([latitud, longitud]).addTo(map);
+        var map = L.map('map').setView([latitud, longitud], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([latitud, longitud]).addTo(map);
     })
     .catch(error => console.error(error));
 }
@@ -108,4 +120,3 @@ function error(posicion){
     alert("Error al obtener la ubicación");
     console.log(error);
 }
-
