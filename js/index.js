@@ -16,7 +16,7 @@ function mostrarPlatillo(platillo, id) {
   if (platillo.foto) {
   fotoPlatillo = platillo.foto; // ya es un DataURL válido
 } else {
-  fotoPlatillo = "img/default.png";
+  fotoPlatillo = "img/default.jpg"; // ruta a la imagen por defecto
 }
 
   contenido = `
@@ -122,9 +122,6 @@ function limpiarfoto() {
   video.removeAttribute("src");
   video.load();
 }
-
-
-
 
 
 const btnCapturar = document.getElementById('btnCapturar');
