@@ -22,7 +22,7 @@
     </div>
   </nav>
 
-  <!-- Menu lateral -->
+  <!-- Menu lateral (ahora a la derecha) -->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">UberEatsCUDEC</a></li>
     <li><a href="https://theyhai.github.io/UberEatsCUDEC/" class="waves-effect">Inicio</a></li>
@@ -44,11 +44,11 @@
     </div>
   </div>
 
-  <!-- Inicialización de la barra lateral sin ui.js -->
+  <!-- Inicialización de la barra lateral en el lado derecho -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const menus = document.querySelectorAll('.side-menu');
-      M.Sidenav.init(menus, {edge: 'left'}); // barra lateral a la izquierda
+      M.Sidenav.init(menus, {edge: 'right'}); // ahora se abre desde la derecha
     });
   </script>
 </body>
