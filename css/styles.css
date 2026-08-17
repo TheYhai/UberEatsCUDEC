@@ -85,3 +85,10 @@ form .input-field{
   width: 120px;      /* ajusta al ancho que quieras en la barra lateral */
   height: auto;
 }
+
+.logo-about {
+  max-width: 150px;   /* tamaño máximo del logo */
+  height: auto;       /* mantiene proporción */
+  margin: 20px auto;  /* centrado con espacio */
+  display: block;
+}
