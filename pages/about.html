@@ -37,8 +37,6 @@
   <!-- content -->
   <div class="container grey-text">
     <h5 class="center">About Us</h5>
-
-    <!-- Logotipo de la app -->
     <div class="center">
       <img src="../img/default.jpg" alt="Logotipo de la app" class="responsive-img logo-about">
       <h4 class="grey-text text-darken-2">YhaiEats</h4>
@@ -46,6 +44,12 @@
     </div>
   </div>
 
-  <script src="../js/ui.js"></script>
+  <!-- Inicialización de la barra lateral sin ui.js -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menus = document.querySelectorAll('.side-menu');
+      M.Sidenav.init(menus, {edge: 'left'}); // barra lateral a la izquierda
+    });
+  </script>
 </body>
 </html>
