@@ -1,6 +1,5 @@
 let contenido = "";
 
-
 document.addEventListener('DOMContentLoaded', function() {
   // nav menu
   const menus = document.querySelectorAll('.side-menu');
@@ -8,41 +7,39 @@ document.addEventListener('DOMContentLoaded', function() {
   // add recipe form
   const forms = document.querySelectorAll('.side-form');
   M.Sidenav.init(forms, {edge: 'left'});
-
 });
 
 function mostrarPlatillo(platillo, id) {
   let fotoPlatillo = "";
   if (platillo.foto) {
-  fotoPlatillo = platillo.foto; // ya es un DataURL válido
-} else {
-  fotoPlatillo = "img/default.jpg"; // ruta a la imagen por defecto
-}
+    fotoPlatillo = platillo.foto; // ya es un DataURL válido
+  } else {
+    fotoPlatillo = "img/default.jpg"; // ruta a la imagen por defecto
+  }
 
   contenido = `
   <div class='card-panel recipe white row' id='${id}' data-id='${id}'>
-  <img src="${fotoPlatillo}" height="100px" width="100px">
+    <img src="${fotoPlatillo}" height="100px" width="100px">
     <div class='recipe-details'>
         <div class='recipe-title'>
           ${platillo.nombre}
-          </div>
-          <div class='recipe-ingredients'>w
+        </div>
+        <div class='recipe-ingredients'>
           ${platillo.ingredientes}
-          </div>
-          <div class='recipe-price'>
+        </div>
+        <div class='recipe-price'>
           $${platillo.precio} MXN
-          </div>
-          <div class="recipe-delete">
+        </div>
+        <div class="recipe-delete">
           <i class="material-icons" data-id="${id}">
           delete_outline
           </i>
-          </div>
-      </div>
+        </div>
     </div>
+  </div>
   `;
 
   document.querySelector(".recipes").innerHTML += contenido;
-
 };
 
 function actualizarPlatillo(platillo, id) {
@@ -50,7 +47,6 @@ function actualizarPlatillo(platillo, id) {
   tarjeta.querySelector(".recipe-title").innerHTML = platillo.nombre;
   tarjeta.querySelector(".recipe-ingredients").innerHTML = platillo.ingredientes;
   tarjeta.querySelector(".recipe-price").innerHTML = `$${platillo.precio} MXN`;
-
 }
 
 const borrarPlatillo = (id) => {
@@ -77,6 +73,10 @@ btnFoto.addEventListener("change", function(event) {
       document.getElementById("fotoInput").value = fotoFinal; // guardar en input oculto
     };
     reader.readAsDataURL(file);
+  } else {
+    // Si no se selecciona nada, usar default.jpg
+    foto.setAttribute("src", "img/default.jpg");
+    document.getElementById("fotoInput").value = "img/default.jpg";
   }
 });
 
@@ -109,8 +109,9 @@ function tomarFoto() {
 }
 
 function limpiarfoto() {
-  foto.setAttribute("src", "");
-  document.getElementById("fotoInput").value = "";
+  foto.setAttribute("src", "img/default.jpg"); // volver al default
+  document.getElementById("fotoInput").value = "img/default.jpg";
+
   if (video.srcObject) {
     const tracks = video.srcObject.getTracks();
     tracks.forEach(track => track.stop()); // detener cada pista
@@ -123,10 +124,8 @@ function limpiarfoto() {
   video.load();
 }
 
-
 const btnCapturar = document.getElementById('btnCapturar');
 const btnLimpiar = document.getElementById('btnLimpiar');
-
 
 btnCapturar.addEventListener("click", (e) => {
   e.preventDefault();
@@ -138,10 +137,6 @@ btnLimpiar.addEventListener("click", (e) => {
   e.preventDefault();
   limpiarfoto(); 
 });
-
-//Agregarla al form  para la base de datops 
-
-//Buscar el click del boton se manda a guardar el platillo
 
 // Botón para iniciar cámara
 const btnCamara = document.getElementById("btnCamara");
