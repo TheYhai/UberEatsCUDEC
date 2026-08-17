@@ -81,16 +81,21 @@ UberEatsCUDEC/
 
 ## 7. Estructura del proyecto
 
-- Inicio
-![Captura de pantalla 2026-08-17 001018.png](../_resources/Captura%20de%20pantalla%202026-08-17%20001018.png)
-- Registrar platillo
-![Captura de pantalla 2026-08-17 001028.png](../_resources/Captura%20de%20pantalla%202026-08-17%20001028.png) 
-- Realizar pedido
-![Captura de pantalla 2026-08-17 001047.png](../_resources/Captura%20de%20pantalla%202026-08-17%20001047.png)
-- Acerca
-![Captura de pantalla 2026-08-17 001414.png](../_resources/Captura%20de%20pantalla%202026-08-17%20001414.png)
-- Contacto
-![Captura de pantalla 2026-08-17 001552.png](../_resources/Captura%20de%20pantalla%202026-08-17%20001552.png)
+- Inicio  
+![Captura de pantalla 2026-08-17 001018.png](img/Captura%20de%20pantalla%202026-08-17%20001018.png)
+
+- Registrar platillo  
+![Captura de pantalla 2026-08-17 001028.png](img/Captura%20de%20pantalla%202026-08-17%20001028.png)
+
+- Realizar pedido  
+![Captura de pantalla 2026-08-17 001047.png](img/Captura%20de%20pantalla%202026-08-17%20001047.png)
+
+- Acerca  
+![Captura de pantalla 2026-08-17 001414.png](img/Captura%20de%20pantalla%202026-08-17%20001414.png)
+
+- Contacto  
+![Captura de pantalla 2026-08-17 001552.png](img/Captura%20de%20pantalla%202026-08-17%20001552.png)
+
 
 ---
 
