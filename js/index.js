@@ -109,12 +109,24 @@ function tomarFoto() {
 }
 
 function limpiarfoto() {
-  foto.setAttribute("src", ""); // limpia la vista previa
+  foto.setAttribute("src", "");
   document.getElementById("fotoInput").value = "";
-
-  // 🔹 Volver a mostrar la cámara para repetir la foto
-  document.getElementById("Camera").style.display = "block";
+  const cameraContainer = document.getElementById("Camera");
+  cameraContainer.style.display = "block";
+  navigator.mediaDevices.getUserMedia({
+    video: { facingMode: "environment" }, // cámara trasera
+    audio: false
+  })
+  .then(stream => {
+    video.srcObject = stream;
+    video.play();
+  })
+  .catch(error => {
+    console.error("Error al reiniciar la cámara:", error);
+    alert("No se pudo abrir la cámara. Verifica permisos y HTTPS.");
+  });
 }
+
 
 
 
