@@ -108,11 +108,14 @@ function tomarFoto() {
   }
 }
 
-
 function limpiarfoto() {
   foto.setAttribute("src", ""); // limpia la vista previa
   document.getElementById("fotoInput").value = "";
+
+  // 🔹 Volver a mostrar la cámara para repetir la foto
+  document.getElementById("Camera").style.display = "block";
 }
+
 
 
 const btnCapturar = document.getElementById('btnCapturar');
