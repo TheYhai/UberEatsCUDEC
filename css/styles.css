@@ -73,3 +73,15 @@ input{
 form .input-field{
   margin-top: 30px;
 }
+
+#foto {
+  max-width: 100%;   /* que nunca se desborde del contenedor */
+  height: auto;      /* mantiene proporción */
+  display: block;
+  margin: 0 auto;    /* centrado */
+}
+
+.side-form #foto {
+  width: 120px;      /* ajusta al ancho que quieras en la barra lateral */
+  height: auto;
+}
